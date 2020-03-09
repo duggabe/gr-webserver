@@ -76,4 +76,15 @@ copy opSys_Win.txt opSys.txt /v
 * Any additional informational messages written to the console will appear there.
 * To terminate, close the tab in your browser and enter Control-C on your terminal.
 
+## QA / Testing
+
+* In the examples folder, there is an echo program which will  receive messages, capitalize the text, and return the message. To use it while gr-webserver is running, open a second terminal screen and perform the following steps:
+
+```
+cd ~/gr-webserver/examples
+python3 zmq_PUSH_PULL_server.py
+```
+
+* Whatever you type on the Input will be echoed in all caps.
+* There is also an example flowgraph which will display input messages on the console and send out a "Testing" message every 10 seconds.
 
