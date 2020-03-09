@@ -1,0 +1,23 @@
+{
+  "name": "webserver",
+  "version": "1.0.15",
+  "description": "Web interface for GNU Radio flowgraphs",
+  "main": "index.js",
+  "dependencies": {
+    "zeromq": "^5.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duggabe/gr-webserver.git"
+  },
+  "author": "Barry Duggan",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/duggabe/gr-webserver/issues"
+  },
+  "homepage": "https://github.com/duggabe/gr-webserver"
+}

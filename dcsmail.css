@@ -1,0 +1,222 @@
+@charset "UTF-8";
+/*	dcsmail.css */
+/* This CSS is for full-sized desk-top and laptop screens */
+
+/* HTML tags */
+
+body {
+font-family: Verdana, Arial, sans-serif;
+font-size: 12pt;
+padding:0px;
+width: 960px;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 30px;
+background-color: rgb(255,255,192);
+}
+
+h2,h3,h4,h5,h6,p,li {
+color: rgb(0,51,102);
+margin-left: 15px;
+}
+
+h1 {
+color: rgb(0,51,102);
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 52pt;
+font-weight: bold;
+text-align: center;
+margin: 10px 0px 0px 0px;
+padding: 0px;
+}
+
+h2 {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 24pt;
+}
+
+h3 {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 20pt;
+}
+
+h4 {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 16pt;
+}
+
+h5 {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 14pt;
+margin: 5px 0px 0px 15px;
+padding: 0px;
+}
+
+h6 {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 10pt;
+}
+
+/* margin top, right, bottom, left */
+aside {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 10pt;
+height: auto;
+width: auto;
+float: left;
+margin: 0px 0px 15px 0px;
+padding: 0px 10px 0px 10px;
+background: rgb(240,248,255);
+border:2px solid gray;
+border-radius: 5px;
+}
+
+caption {
+font-size: 10pt;
+font-weight: bold;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 20px 5px;
+}
+
+textarea {
+   font-size: 12pt;
+   font-family: Arial;
+} 
+
+ul.b {
+list-style-type: disc;
+padding-right: 15px;
+}
+
+/* class styles */
+
+.logo {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 12pt;
+font-weight: bold;
+}
+
+.c_allDay {
+color: white;
+text-align: center;
+background: rgb(0,160,0);
+border: 1px solid black;
+}
+
+.box {
+height: auto;
+width: auto;
+float: left;
+margin-left: 15px;
+margin-bottom: 15px;
+margin-right: 60px;
+text-align: center;
+padding: 8px 12px 8px 8px;
+background: rgb(212,212,224);
+border:2px solid gray;
+border-radius: 5px;
+}
+
+.box2 {
+height: auto;
+width: 300px;
+float: left;
+margin: 15px;
+text-align: center;
+padding: 1em;
+background: rgb(212,212,224);
+border:2px solid gray;
+border-radius: 5px;
+}
+
+.u_cent {
+font-family: Trebuchet, Verdana, Arial, sans-serif;
+font-size: 10pt;
+text-align: center;
+margin: 0px;
+}
+
+.d_fl_left {
+  float: left;
+  margin: 0px 15px 15px 15px;
+  }
+
+.d_fl_right {
+  float: right;
+  margin: 0px 0px 0px 15px;
+  }
+
+.d_cent {
+  text-align: left;
+  margin: 0px 30px 0px 15px;
+  }
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+}
+
+#l_col {
+height: auto;
+width: 40%;
+float: left;
+margin: 5px;
+padding: 5px;
+}
+
+#r_col {
+height: auto;
+width: 40%;
+float: right;
+margin: 5px;
+padding: 5px;
+}
+
+/* This clear class terminates float */
+.clear { 
+clear: both; 
+}
+
+.bl_strip {
+height: auto;
+width: 100%;
+margin: 0px;
+padding: 4px;
+color: white;
+background: rgb(0,0,238);
+}
+
+.lt_bl_field {
+height: auto;
+width: 300px;
+margin: 0px 0px 0px 15px;
+padding: 4px;
+text-align: center;
+color: black;
+background: rgb(191,239,255);
+}
+
+#ft_left {
+height: 200px;
+width: 300px;
+float: left;
+background-color: rgb(254,46,46);
+}
+
+#ft_cent {
+height: 200px;
+width: 300px;
+float: left;
+margin: 0px 30px 0px 30px;
+background-color: rgb(255,165,0);
+}
+
+#ft_right {
+height: 200px;
+width: 300px;
+float: right;
+background-color: rgb(208,255,255);
+}
