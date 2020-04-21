@@ -4,6 +4,10 @@ This web server emulates a terminal/console using a browser for the user interfa
 
 For use with GNU Radio, it sends keyboard input text to a ZMQ PUSH Message socket and displays received text from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for string messages.
 
+Here is a screen shot:
+
+![screen shot](./gr-webserver_out.png "gr-webserver Console")
+
 ## Installation
 
 See [What is GNU Radio?](https://wiki.gnuradio.org/index.php/What_is_GNU_Radio%3F) and [Installing GNU Radio](https://wiki.gnuradio.org/index.php/InstallingGR)
