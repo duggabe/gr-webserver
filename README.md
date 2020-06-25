@@ -80,9 +80,21 @@ copy opSys_Win.txt opSys.txt /v
 * Any additional informational messages written to the console will appear there.
 * To terminate, close the tab in your browser and enter Control-C on your terminal.
 
+## Using across multiple computers (new in version 1.0.16)
+
+If the ZMQ Message Source and Sink blocks are on different computers on the same LAN, then the IP and port number of the ZMQ PUSH Message Sink block must be specified on each end of that connection. For example, if the Sink is on IP 192.168.2.14:50251 and the Source is on IP 192.168.2.5, both Source and Sink blocks must specify the Sink IP and port (192.168.2.14:50251).
+
+* To set the local and remote IP addresses, start the webserver with IP parameters (local remote). For example:
+
+```
+node index.js 192.168.2.14 192.168.2.5
+```
+
+* See [ZMQ PUSH Message Sink](https://wiki.gnuradio.org/index.php/ZMQ_PUSH_Message_Sink) for additional information.
+
 ## QA / Testing
 
-* In the examples folder, there is an echo program which will  receive messages, capitalize the text, and return the message. To use it while gr-webserver is running, open a second terminal screen and perform the following steps:
+* In the examples folder, there is an echo program which will receive messages, capitalize the text, and return the message. To use it while gr-webserver is running, open a second terminal screen and perform the following steps:
 
 ```
 cd ~/gr-webserver/examples
@@ -91,4 +103,6 @@ python3 zmq_PUSH_PULL_server.py
 
 * Whatever you type on the Input will be echoed in all caps.
 * There is also an example flowgraph which will display input messages on the console and send out a "Testing" message every 10 seconds.
+
+* While gr-webserver is running, you can open another tab in your browser to ```http://localhost:50250/trace``` to see some additional information.
 

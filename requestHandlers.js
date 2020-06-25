@@ -30,8 +30,10 @@ else
 
 /*  GLOBAL variables */
 var Version = "1.0.0";          // filled in from ./package.json file
-var debugFlags = 1;          // bit-wise flags: 0 = none; 1 = trace_buffer; 2 = console.log; 4 = more detail
-const DB_SIZE = 20;         // display 20 lines
+var debugFlags = 1;             // bit-wise flags: 0 = none; 1 = trace_buffer; 2 = console.log; 4 = more detail
+var IN_SERVER = "127.0.0.1"     // localhost
+var OUT_SERVER = "127.0.0.1"    // localhost
+const DB_SIZE = 20;             // display 20 lines
 var display_buffer = [];
 var display_initialized = 0;
 var trace_buffer = "";
@@ -216,17 +218,27 @@ function init (response, request)
             display_buffer.push ("");       // fill buffer with empty strings
         display_initialized = 1;
         }
+    if ((process.argv.length) > 3)
+        {
+        if (debugFlags & 1)
+            trace_buffer += (process.argv + "<br>");
+        var pos = process.argv[2].search ("192.168");
+        if (pos == 0)
+            OUT_SERVER = process.argv[2];   // set local address
+        pos = process.argv[3].search ("192.168");
+        if (pos == 0)
+            IN_SERVER = process.argv[3];    // set remote address
+        }
     if (in_sockConnected == 0)
         {
         // create sockets
         var in_sock = zmq.socket("pull");
         var _PROTOCOL = "tcp://"
-        var _SERVER = "127.0.0.1"           // localhost
         var IN_PORT = ":50252"
-        var IN_ADDR = _PROTOCOL + _SERVER + IN_PORT
+        var IN_ADDR = _PROTOCOL + IN_SERVER + IN_PORT
         out_sock = zmq.socket('push');
         var OUT_PORT = ":50251"
-        var OUT_ADDR = _PROTOCOL + _SERVER + OUT_PORT
+        var OUT_ADDR = _PROTOCOL + OUT_SERVER + OUT_PORT
 
         in_sock.connect (IN_ADDR);
         if (debugFlags & 1)
