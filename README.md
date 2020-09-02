@@ -42,7 +42,7 @@ cd ~/gr-webserver
 * If you don't have 'node' (or 'nodejs') enter:
 
 ```
-sudo apt install node
+sudo apt install nodejs
 ```
 
 * If you don't have 'npm' enter:
