@@ -1,10 +1,16 @@
 # gr-webserver
 
-This web server emulates a terminal/console using a browser for the user interface.<br>
+This web server emulates a terminal/console using a browser for the user interface. It is mainly for use with GNU Radio.<br>
 
-For use with GNU Radio, it sends keyboard input text to a ZMQ PUSH Message socket and displays received text from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for string messages.
+## Versions
 
-Here is a screen shot:
+There are two release versions of this program:
+
+* Version v1.0.16.0 sends keyboard input text as a PMT message to a ZMQ PUSH Message socket and displays received PMT messages from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for PMT string messages.
+
+* Version v2.0.0.0 sends keyboard input text as a PDU message to a ZMQ PUB Message socket and displays received PDU messages from a ZMQ SUB Message socket. It can interface with all of the PDU string functions.
+
+Here is a screen shot of Version 1:
 
 ![screen shot](./gr-webserver_out.png "gr-webserver Console")
 
@@ -14,55 +20,53 @@ See [What is GNU Radio?](https://wiki.gnuradio.org/index.php/What_is_GNU_Radio%3
 
 Note: These instructions are written for a Linux OS. Similar commands work for Mac and Windows.
 
-* Open a terminal window.
+* Open a terminal window.  
 * Change to the home directory.
-
+  
 ```
 cd ~/  
 ```
-
-* If you don't have 'git', enter
+* If you don't have 'git', enter.
 
 ```
 sudo apt install git  
 ```
-
 * Clone the repository:
 
 ```
 git clone https://github.com/duggabe/gr-webserver.git
 ```
-
 * Change to the cloned directory:
 
 ```
 cd ~/gr-webserver
 ```
+* If you want Version v1.0.16.0, enter:
 
+```
+git checkout v1.0.16.0
+```
 * If you don't have 'node' (or 'nodejs') enter:
 
 ```
 sudo apt install nodejs
 ```
-
 * If you don't have 'npm' enter:
 
 ```
 sudo apt install npm
 ```
-
 * Install zeromq:
 
 ```
 npm install zeromq --save
 ```
-
-* There are three files to define the Operating System for gr-webserver. Execute the appropriate one.
+* There are three files to define the Operating System for gr-webserver. Execute the appropriate one for your system.
 
 ```
 cp -v opSys_Linux.txt opSys.txt
 cp -v opSys_Mac.txt opSys.txt
-copy opSys_Win.txt opSys.txt /v
+copy opSys_Win.txt opSys.txt
 ```
 
 ## Operation
@@ -102,7 +106,7 @@ python3 zmq_PUSH_PULL_server.py
 ```
 
 * Whatever you type on the Input will be echoed in all caps.
-* There is also an example flowgraph which will display input messages on the console and send out a "Testing" message every 10 seconds.
+* There is also an example flowgraph which will display input messages on the console and send out a "GNU Radio" message every 10 seconds.
 
 * While gr-webserver is running, you can open another tab in your browser to ```http://localhost:50250/trace``` to see some additional information.
 

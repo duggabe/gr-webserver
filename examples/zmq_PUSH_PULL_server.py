@@ -7,7 +7,7 @@ import sys
 import pmt
 import zmq
 
-_debug = 1
+_debug = 0
 
 # create a PUSH socket
 _PROTOCOL = "tcp://"

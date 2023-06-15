@@ -4,9 +4,8 @@
   "description": "Web interface for GNU Radio flowgraphs",
   "main": "index.js",
   "dependencies": {
-    "zeromq": "^5.2.0"
+    "zeromq": "^5.3.1"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node index.js"
   },
