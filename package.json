@@ -1,6 +1,6 @@
 {
   "name": "webserver",
-  "version": "1.0.16",
+  "version": "2.0.0.0",
   "description": "Web interface for GNU Radio flowgraphs",
   "main": "index.js",
   "dependencies": {

@@ -29,8 +29,8 @@ else
     }
 
 /*  GLOBAL variables */
-var Version = "1.0.0";          // filled in from ./package.json file
-var debugFlags = 1;             // bit-wise flags: 0 = none; 1 = trace_buffer; 2 = console.log; 4 = more detail
+var Version = "2.0.0";          // filled in from ./package.json file
+var debugFlags = 5;             // bit-wise flags: 0 = none; 1 = trace_buffer; 2 = console.log; 4 = more detail
 var IN_SERVER = "127.0.0.1"     // localhost
 var OUT_SERVER = "127.0.0.1"    // localhost
 const DB_SIZE = 20;             // display 20 lines
@@ -113,8 +113,8 @@ function Console (response, request)
     var _ctime = now.toString();
     if (in_sockConnected == 0)
         {
-        console.log ("zmq PULL socket not connected at " + _ctime);
-        trace_buffer += ("zmq PULL socket not connected at " + _ctime + "<br>");
+        console.log ("zmq SUB socket not connected at " + _ctime);
+        trace_buffer += ("zmq SUB socket not connected at " + _ctime + "<br>");
         trace_buffer += (" *** Doing a restart. ***<br><br>");
         // switch to init screen to restart TLS
         response.writeHead (302, {'Location': 'http://localhost:50250/init'});
@@ -232,36 +232,29 @@ function init (response, request)
     if (in_sockConnected == 0)
         {
         // create sockets
-        var in_sock = zmq.socket("pull");
+        var in_sock = zmq.socket("sub");
         var _PROTOCOL = "tcp://"
         var IN_PORT = ":50252"
         var IN_ADDR = _PROTOCOL + IN_SERVER + IN_PORT
-        out_sock = zmq.socket('push');
+        out_sock = zmq.socket('pub');
         var OUT_PORT = ":50251"
         var OUT_ADDR = _PROTOCOL + OUT_SERVER + OUT_PORT
 
         in_sock.connect (IN_ADDR);
+        in_sock.subscribe ("");
         if (debugFlags & 1)
-            trace_buffer += ("zmq PULL socket listening on: " + IN_ADDR + "<br>");
+            trace_buffer += ("zmq SUB socket listening on: " + IN_ADDR + "<br>");
         in_sockConnected = 1;
 
         out_sock.bind (OUT_ADDR);
         if (debugFlags & 1)
-            trace_buffer += ("zmq PUSH socket bound to: " + OUT_ADDR + "<br>");
+            trace_buffer += ("zmq PUB socket bound to: " + OUT_ADDR + "<br>");
 
         in_sock.on ("message", function(data) {
             var i;
-            var in_msg = pmt_to_string (data);
-            var s_len = in_msg.length;
-            var msg = "";
-            // strip trailing LF
-            for (i = 0; i < s_len; i++)
-                {
-                if (in_msg[i] != "\n")
-                    msg += in_msg[i];
-                else
-                    break;    // stop on first LF found
-                }
+            var d_len = data.length;
+            var rcv_obj = JSON.parse(data);
+            var msg = rcv_obj.text;
             display_buffer.push ("< " + msg + "<br>");      // put in new item at end
             display_buffer.shift();                                     // remove oldest from top
             });
@@ -279,7 +272,7 @@ function send_sse (response, request)
         console.log("Request handler 'send_sse'.");
     var now = new Date();
     var _ctime = now.toString();
-    if (debugFlags & 4)
+    if (debugFlags & 8)
         {
         trace_buffer += ("send_sse: " + _ctime + "<br>");
         trace_buffer += ("data: " + display_buffer.join("") + "<br>");
@@ -336,7 +329,6 @@ function upload (response, postData)
         console.log ("Request handler 'upload'.");
     var url_parts = querystring.parse (postData);
     var in_msg = url_parts.in_put;
-    var pmt_msg = [];
     var i;
     var msg = "";
     var s_len = in_msg.length;
@@ -348,14 +340,15 @@ function upload (response, postData)
         else
             break;    // stop on first LF found
         }
-    if (debugFlags & 4)
-        trace_buffer += ("upload: '" + msg + "'<br>");
     // display message
     display_buffer.push ("> " + msg + "<br>");      // put in new item at end
     display_buffer.shift();                                     // remove oldest from top
+
+    var obj = {text: "message"};
+    obj.text = msg;
+    var out_msg = JSON.stringify(obj);
     // send to server
-    pmt_msg = string_to_pmt (msg);
-    out_sock.send (pmt_msg);
+    out_sock.send (out_msg);
     // switch to Console screen
     response.writeHead(302, {'Location': 'http://localhost:50250/Console'});
     response.end();

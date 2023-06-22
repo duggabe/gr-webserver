@@ -8,7 +8,7 @@ There are two release versions of this program:
 
 * Version v1.0.16.0 sends keyboard input text as a PMT message to a ZMQ PUSH Message socket and displays received PMT messages from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for PMT string messages.
 
-* Version v2.0.0.0 sends keyboard input text as a PDU message to a ZMQ PUB Message socket and displays received PDU messages from a ZMQ SUB Message socket. It can interface with all of the PDU string functions.
+* Version v2.0.0.0 sends keyboard input text as a JSON message to a ZMQ PUB Message socket and displays received JSON messages from a ZMQ SUB Message socket.
 
 Here is a screen shot of Version 1:
 
@@ -78,15 +78,15 @@ copy opSys_Win.txt opSys.txt
     - "opSys is Linux" (your appropriate OS)
     - "gr-webserver has started. Listening on port: 50250"
 * A web page (or tab) will open in your default browser.
-* Text entered in the "Input" field is processed one line at a time. The terminator is the 'Enter' key. The text will be displayed on the Console screen, preceded by<br> &quot;&gt;&nbsp;&quot;, and will be sent through a ZMQ PUSH Message port 50251.
-* Text received by the ZMQ PULL Message port 50252 will be displayed on the Console screen, preceded by &quot;&lt;&nbsp;&quot;.
+* Text entered in the "Input" field is processed one line at a time. The terminator is the 'Enter' key. The text will be displayed on the Console screen, preceded by<br> &quot;&gt;&nbsp;&quot;, and will be sent through a ZMQ PUB Message port 50251.
+* Text received by the ZMQ SUB Message port 50252 will be displayed on the Console screen, preceded by &quot;&lt;&nbsp;&quot;.
 * The terminal will remain attached to the node.js process.
 * Any additional informational messages written to the console will appear there.
 * To terminate, close the tab in your browser and enter Control-C on your terminal.
 
 ## Using across multiple computers (new in version 1.0.16)
 
-If the ZMQ Message Source and Sink blocks are on different computers on the same LAN, then the IP and port number of the ZMQ PUSH Message Sink block must be specified on each end of that connection. For example, if the Sink is on IP 192.168.2.14:50251 and the Source is on IP 192.168.2.5, both Source and Sink blocks must specify the Sink IP and port (192.168.2.14:50251).
+If the ZMQ Message Source and Sink blocks are on different computers on the same LAN, then the IP and port number of the ZMQ PUB Message Sink block must be specified on each end of that connection. For example, if the Sink is on IP 192.168.2.14:50251 and the Source is on IP 192.168.2.5, both Source and Sink blocks must specify the Sink IP and port (192.168.2.14:50251).
 
 * To set the local and remote IP addresses, start the webserver with IP parameters (local remote). For example:
 
@@ -102,11 +102,10 @@ node index.js 192.168.2.14 192.168.2.5
 
 ```
 cd ~/gr-webserver/examples
-python3 zmq_PUSH_PULL_server.py
+python3 echo_JSON.py
 ```
 
 * Whatever you type on the Input will be echoed in all caps.
-* There is also an example flowgraph which will display input messages on the console and send out a "GNU Radio" message every 10 seconds.
 
-* While gr-webserver is running, you can open another tab in your browser to ```http://localhost:50250/trace``` to see some additional information.
+* While gr-webserver is running, you can open another tab in your browser to ```http://localhost:50250/trace``` to see some diagnostic information.
 

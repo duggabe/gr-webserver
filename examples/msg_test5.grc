@@ -9,7 +9,7 @@ options:
     description: See https://github.com/duggabe/gr-webserver
     gen_cmake: 'On'
     gen_linking: dynamic
-    generate_options: qt_gui
+    generate_options: no_gui
     hier_block_src_path: '.:'
     id: msg_test5
     max_nouts: '0'
@@ -28,7 +28,7 @@ options:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 8]
+    coordinate: [16, 12.0]
     rotation: 0
     state: enabled
 
@@ -42,7 +42,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12]
+    coordinate: [192, 12.0]
     rotation: 0
     state: enabled
 - name: blocks_message_debug_0
@@ -56,7 +56,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [416, 184.0]
+    coordinate: [448, 184.0]
     rotation: 0
     state: true
 - name: blocks_message_strobe_0
@@ -67,13 +67,13 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    msg: pmt.intern("GNU Radio")
-    period: '10000'
+    msg: pmt.intern("GNU Radio\n")
+    period: '2000'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [144, 324.0]
+    coordinate: [120, 324.0]
     rotation: 0
     state: true
 - name: blocks_null_sink_0
@@ -133,8 +133,24 @@ blocks:
     coordinate: [448, 44.0]
     rotation: 0
     state: true
-- name: zeromq_pull_msg_source_0
-  id: zeromq_pull_msg_source
+- name: zeromq_pub_msg_sink_0
+  id: zeromq_pub_msg_sink
+  parameters:
+    address: tcp://127.0.0.1:50252
+    affinity: ''
+    alias: ''
+    bind: 'True'
+    comment: ''
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 324.0]
+    rotation: 0
+    state: true
+- name: zeromq_sub_msg_source_0
+  id: zeromq_sub_msg_source
   parameters:
     address: tcp://127.0.0.1:50251
     affinity: ''
@@ -148,31 +164,15 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [104, 172.0]
+    coordinate: [88, 172.0]
     rotation: 0
     state: true
-- name: zeromq_push_msg_sink_0
-  id: zeromq_push_msg_sink
-  parameters:
-    address: tcp://127.0.0.1:50252
-    affinity: ''
-    alias: ''
-    bind: 'True'
-    comment: ''
-    timeout: '100'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [408, 324.0]
-    rotation: 0
-    state: enabled
 
 connections:
-- [blocks_message_strobe_0, strobe, zeromq_push_msg_sink_0, in]
+- [blocks_message_strobe_0, strobe, zeromq_pub_msg_sink_0, in]
 - [blocks_null_source_0, '0', blocks_throttle2_0, '0']
 - [blocks_throttle2_0, '0', blocks_null_sink_0, '0']
-- [zeromq_pull_msg_source_0, out, blocks_message_debug_0, print]
+- [zeromq_sub_msg_source_0, out, blocks_message_debug_0, print]
 
 metadata:
   file_format: 1
