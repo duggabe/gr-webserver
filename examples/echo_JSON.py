@@ -35,18 +35,26 @@ sub_sock.setsockopt(zmq.SUBSCRIBE, b'') # subscribe to topic of all
 
 while True:
     #  Wait for next request from client
-    data = sub_sock.recv()
-    if (debugFlags & 1):
-        print("Received:", data)
+    msg = sub_sock.recv()
+    m_len = len (msg)
+    if (debugFlags & 4):
+        print("Received:", msg, m_len)
+    i = 0
+    data = ""
+    while (i < m_len):
+        data += chr (msg[i])
+        i += 1
+    if (debugFlags & 4):
+        print("data:", data)
     PYdict = json.loads(data)
-    if (debugFlags & 1):
+    if (debugFlags & 4):
         print("PYdict:", PYdict)
     output = PYdict["text"].upper()    # capitalize message
     PYdict["text"] = output
     #  Send reply back to client
     _reply = json.dumps(PYdict)
     res = _reply.encode('utf-8')
-    if (debugFlags & 1):
+    if (debugFlags & 4):
         print("Sent:", str(res))
     pub_sock.send (res)
 
