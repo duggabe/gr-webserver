@@ -30,7 +30,7 @@ else
 
 /*  GLOBAL variables */
 var Version = "2.0.0";          // filled in from ./package.json file
-var debugFlags = 5;             // bit-wise flags: 0 = none; 1 = trace_buffer; 2 = console.log; 4 = more detail
+var debugFlags = 1;             // bit-wise flags: 0 = none; 1 = trace_buffer; 2 = console.log; 4 = more detail
 var IN_SERVER = "127.0.0.1"     // localhost
 var OUT_SERVER = "127.0.0.1"    // localhost
 const DB_SIZE = 20;             // display 20 lines
@@ -96,7 +96,6 @@ function string_to_pmt (s_string)
     p_string += "\x00";         // UVI_U8 = 0x00
     p_string += String.fromCharCode (s_len);
     p_string += s_string;
-//    p_string += "'";
     if (debugFlags & 4)
         {
         trace_buffer += ("string_to_pmt:  '" + s_string + "'<br>"); 
@@ -249,12 +248,20 @@ function init (response, request)
         out_sock.bind (OUT_ADDR);
         if (debugFlags & 1)
             trace_buffer += ("zmq PUB socket bound to: " + OUT_ADDR + "<br>");
-
+// marker 1
         in_sock.on ("message", function(data) {
             var i;
-            var d_len = data.length;
-            var rcv_obj = JSON.parse(data);
-            var msg = rcv_obj.text;
+            var in_msg = pmt_to_string (data);
+            var s_len = in_msg.length;
+            var msg = "";
+            // strip trailing LF
+            for (i = 0; i < s_len; i++)
+                {
+                if (in_msg[i] != "\n")
+                    msg += in_msg[i];
+                else
+                    break;    // stop on first LF found
+                }
             display_buffer.push ("< " + msg + "<br>");      // put in new item at end
             display_buffer.shift();                                     // remove oldest from top
             });
@@ -329,6 +336,7 @@ function upload (response, postData)
         console.log ("Request handler 'upload'.");
     var url_parts = querystring.parse (postData);
     var in_msg = url_parts.in_put;
+    var pmt_msg = [];
     var i;
     var msg = "";
     var s_len = in_msg.length;
@@ -340,15 +348,14 @@ function upload (response, postData)
         else
             break;    // stop on first LF found
         }
+    if (debugFlags & 4)
+        trace_buffer += ("upload: '" + msg + "'<br>");
     // display message
     display_buffer.push ("> " + msg + "<br>");      // put in new item at end
     display_buffer.shift();                                     // remove oldest from top
-
-    var obj = {text: "message"};
-    obj.text = msg;
-    var out_msg = JSON.stringify(obj);
     // send to server
-    out_sock.send (out_msg);
+    pmt_msg = string_to_pmt (msg);
+    out_sock.send (pmt_msg);
     // switch to Console screen
     response.writeHead(302, {'Location': 'http://localhost:50250/Console'});
     response.end();

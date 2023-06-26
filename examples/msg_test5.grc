@@ -67,8 +67,8 @@ blocks:
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
-    msg: pmt.intern("GNU Radio\n")
-    period: '2000'
+    msg: pmt.intern("GNU Radio")
+    period: '5000'
   states:
     bus_sink: false
     bus_source: false

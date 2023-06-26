@@ -45,7 +45,7 @@ class msg_test5(gr.top_block):
         self.blocks_throttle2_0 = blocks.throttle( gr.sizeof_gr_complex*1, samp_rate, True, 0 if "auto" == "auto" else max( int(float(0.1) * samp_rate) if "auto" == "time" else int(0.1), 1) )
         self.blocks_null_source_0 = blocks.null_source(gr.sizeof_gr_complex*1)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_gr_complex*1)
-        self.blocks_message_strobe_0 = blocks.message_strobe(pmt.intern("GNU Radio\n"), 2000)
+        self.blocks_message_strobe_0 = blocks.message_strobe(pmt.intern("GNU Radio"), 5000)
         self.blocks_message_debug_0 = blocks.message_debug(True)
 
 

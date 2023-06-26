@@ -8,7 +8,7 @@ There are two release versions of this program:
 
 * Version v1.0.16.0 sends keyboard input text as a PMT message to a ZMQ PUSH Message socket and displays received PMT messages from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for PMT string messages.
 
-* Version v2.0.0.0 sends keyboard input text as a JSON message to a ZMQ PUB Message socket and displays received JSON messages from a ZMQ SUB Message socket.
+* Version v2.0.2.0 changes the ZMQ PUSH Message socket to a ZMQ PUB Message socket and changes the ZMQ PULL Message socket to a ZMQ SUB Message socket.
 
 Here is a screen shot of Version 1:
 
@@ -98,14 +98,16 @@ node index.js 192.168.2.14 192.168.2.5
 
 ## QA / Testing
 
-* In the examples folder, there is an echo program which will receive messages, capitalize the text, and return the message. To use it while gr-webserver is running, open a second terminal screen and perform the following steps:
+* In the examples folder, there is a flowgraph which sends a message periodically and displays received messages on the terminal screen. To use it while gr-webserver is running, open a second terminal screen and perform the following steps:
 
 ```
 cd ~/gr-webserver/examples
-python3 echo_JSON.py
+gnuradio-companion
 ```
 
-* Whatever you type on the Input will be echoed in all caps.
+* Open 'msg_test5.grc' then click 'Execute the flowgraph' or press F6.
+
+* On the 'gr-webserver' screen the message "< GNU Radio" will be displayed every 5 seconds. Anything you type in the Input box will be displayed on the 'msg_test5.grc' screen. 
 
 * While gr-webserver is running, you can open another tab in your browser to ```http://localhost:50250/trace``` to see some diagnostic information.
 
