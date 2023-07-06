@@ -8,7 +8,7 @@ There are two release versions of this program:
 
 * Version v1.0.16.0 sends keyboard input text as a PMT message to a ZMQ PUSH Message socket and displays received PMT messages from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for PMT string messages.
 
-* Version v2.0.2.0 changes the ZMQ PUSH Message socket to a ZMQ PUB Message socket and changes the ZMQ PULL Message socket to a ZMQ SUB Message socket.
+* Version v2.1.0.0 changes the ZMQ PUSH Message socket to a ZMQ PUB Message socket and changes the ZMQ PULL Message socket to a ZMQ SUB Message socket. It can receive either plain PMT messages (such as from a Message_Strobe), or PDU messages (such as from a Tagged_Stream_to_PDU block).
 
 Here is a screen shot of Version 1:
 
@@ -84,7 +84,7 @@ copy opSys_Win.txt opSys.txt
 * Any additional informational messages written to the console will appear there.
 * To terminate, close the tab in your browser and enter Control-C on your terminal.
 
-## Using across multiple computers (new in version 1.0.16)
+## Using across multiple computers (new in version 1.0.16.0)
 
 If the ZMQ Message Source and Sink blocks are on different computers on the same LAN, then the IP and port number of the ZMQ PUB Message Sink block must be specified on each end of that connection. For example, if the Sink is on IP 192.168.2.14:50251 and the Source is on IP 192.168.2.5, both Source and Sink blocks must specify the Sink IP and port (192.168.2.14:50251).
 

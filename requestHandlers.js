@@ -58,27 +58,38 @@ function pmt_to_string (p_string)
     {
     /* converts a GNU Radio Polymorphic Type to a string */
     var i;
-    var offset = 3;
-    var s_len = p_string[2];
+    var offset;
+    var s_len;
     var p_len = p_string.length;
     var o_string = ""
 
     if (debugFlags & 4)
         {
+        trace_buffer += ("pmt_to_string:<br>");
         for (i = 0; i < p_len; i++)
             trace_buffer += (" " + p_string[i]);
         trace_buffer += ("<br>"); 
         }
+    if (p_string[0] == 2)   // PST_SYMBOL = 0x02
+        {
+        s_len = p_string[2];
+        offset = 3;
+        }
+    else
+        {
+        s_len = p_string[7];
+        offset = 10;
+        }
     for (i = offset; i < p_len; i++)
         {
-        if (p_string[i] != 13)          // LF
+        if (p_string[i] != 13)          // quit on LF
             o_string += String.fromCharCode(p_string[i]);
         }
     if (debugFlags & 4)
         {
-        trace_buffer += ("offset = " + offset + "<br>"); 
-        trace_buffer += ("s_len = " + s_len + "<br>");
         trace_buffer += ("p_len = " + p_len + "<br>");
+        trace_buffer += ("s_len = " + s_len + "<br>");
+        trace_buffer += ("offset = " + offset + "<br>"); 
         trace_buffer += ("o_string = '" + o_string + "'<br>"); 
         }
     return (o_string);
@@ -97,10 +108,7 @@ function string_to_pmt (s_string)
     p_string += String.fromCharCode (s_len);
     p_string += s_string;
     if (debugFlags & 4)
-        {
         trace_buffer += ("string_to_pmt:  '" + s_string + "'<br>"); 
-        trace_buffer += ("string_to_pmt: [" + p_string + "]<br>");
-        }
     return (p_string);
     }
 
@@ -250,6 +258,8 @@ function init (response, request)
             trace_buffer += ("zmq PUB socket bound to: " + OUT_ADDR + "<br>");
 // marker 1
         in_sock.on ("message", function(data) {
+            if (debugFlags & 2)
+                console.log ("message", data);
             var i;
             var in_msg = pmt_to_string (data);
             var s_len = in_msg.length;
