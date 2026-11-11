@@ -56,11 +56,16 @@ sudo apt install nodejs
 ```
 sudo apt install npm
 ```
-* Install zeromq:
+* Install zeromq. Run this inside `~/gr-webserver`, so it installs the version listed in
+  `package.json` (zeromq 6, Node.js 12 or later) into `~/gr-webserver/node_modules`:
 
 ```
-npm install zeromq --save
+cd ~/gr-webserver
+npm install
 ```
+  Note: zeromq 6 moved the `socket()` API used here to `zeromq/v5-compat`; gr-webserver
+  loads that automatically. Version v1.0.16.0 predates this and needs zeromq 5
+  (`npm install zeromq@5`), which may not build on current Node.js versions.
 * There are three files to define the Operating System for gr-webserver. Execute the appropriate one for your system.
 
 ```

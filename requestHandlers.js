@@ -9,7 +9,9 @@ var querystring = require("querystring");
 var exec = require("child_process").exec;
 var execSync = require("child_process").execSync;
 var inspect = require('util').inspect;
-var zmq = require("zeromq");
+// zeromq 6 moved the socket() API to v5-compat; zeromq 5 has it at the top level
+var zmq;
+try { zmq = require("zeromq/v5-compat"); } catch (e) { zmq = require("zeromq"); }
 
 var _ops = fs.readFileSync ("opSys.txt", "utf8");
 var opSys = _ops.substr(0,5);       /*  Win64, MacOS, or Linux (first 5 characters) */
