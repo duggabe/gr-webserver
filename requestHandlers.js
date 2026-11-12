@@ -41,6 +41,7 @@ var display_initialized = 0;
 var trace_buffer = "";
 var in_sockConnected = 0;
 var out_sock;
+var in_sock;                    // global, so the SUB socket is never garbage-collected
 
 var _pkg = _localPath + "package.json";
 var PKinfo = {};
@@ -241,7 +242,7 @@ function init (response, request)
     if (in_sockConnected == 0)
         {
         // create sockets
-        var in_sock = zmq.socket("sub");
+        in_sock = zmq.socket("sub");
         var _PROTOCOL = "tcp://"
         var IN_PORT = ":50252"
         var IN_ADDR = _PROTOCOL + IN_SERVER + IN_PORT
@@ -251,6 +252,17 @@ function init (response, request)
 
         in_sock.connect (IN_ADDR);
         in_sock.subscribe ("");
+        // log connection changes of the SUB socket (flowgraph started / stopped)
+        function sockLog (text)
+            {
+            var line = new Date().toTimeString().substr(0,8) + " zmq SUB " + text;
+            console.log (line);
+            trace_buffer += (line + "<br>");
+            }
+        in_sock.on ("error", function (err) { sockLog ("error: " + err); });
+        in_sock.on ("connect", function () { sockLog ("connected to flowgraph"); });
+        in_sock.on ("disconnect", function () { sockLog ("disconnected (flowgraph stopped?)"); });
+        in_sock.monitor ();
         if (debugFlags & 1)
             trace_buffer += ("zmq SUB socket listening on: " + IN_ADDR + "<br>");
         in_sockConnected = 1;
