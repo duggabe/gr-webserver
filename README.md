@@ -4,13 +4,9 @@ This web server emulates a terminal/console using a browser for the user interfa
 
 ## Versions
 
-There are two release versions of this program:
+Version v2.1.0.0 sends keyboard input text as a PMT message to a ZMQ PUB Message socket and displays received messages from a ZMQ SUB Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for PMT string messages. It can receive either plain PMT messages (such as from a Message_Strobe), or PDU messages (such as from a Tagged_Stream_to_PDU block).
 
-* Version v1.0.16.0 sends keyboard input text as a PMT message to a ZMQ PUSH Message socket and displays received PMT messages from a ZMQ PULL Message socket. It can be used as an alternative to a Message Edit Box and/or a Message Debug Block for PMT string messages.
-
-* Version v2.1.0.0 changes the ZMQ PUSH Message socket to a ZMQ PUB Message socket and changes the ZMQ PULL Message socket to a ZMQ SUB Message socket. It can receive either plain PMT messages (such as from a Message_Strobe), or PDU messages (such as from a Tagged_Stream_to_PDU block).
-
-Here is a screen shot of Version 1:
+Here is a screen shot:
 
 ![screen shot](./gr-webserver_out.png "gr-webserver Console")
 
@@ -41,11 +37,6 @@ git clone https://github.com/duggabe/gr-webserver.git
 ```
 cd ~/gr-webserver
 ```
-* If you want Version v1.0.16.0, enter:
-
-```
-git checkout v1.0.16.0
-```
 * If you don't have 'node' (or 'nodejs') enter:
 
 ```
@@ -64,8 +55,7 @@ cd ~/gr-webserver
 npm install
 ```
   Note: zeromq 6 moved the `socket()` API used here to `zeromq/v5-compat`; gr-webserver
-  loads that automatically. Version v1.0.16.0 predates this and needs zeromq 5
-  (`npm install zeromq@5`), which may not build on current Node.js versions.
+  loads that automatically.
 * There are three files to define the Operating System for gr-webserver. Execute the appropriate one for your system.
 
 ```
@@ -89,7 +79,7 @@ copy opSys_Win.txt opSys.txt
 * Any additional informational messages written to the console will appear there.
 * To terminate, close the tab in your browser and enter Control-C on your terminal.
 
-## Using across multiple computers (new in version 1.0.16.0)
+## Using across multiple computers
 
 If the ZMQ Message Source and Sink blocks are on different computers on the same LAN, then the IP and port number of the ZMQ PUB Message Sink block must be specified on each end of that connection. For example, if the Sink is on IP 192.168.2.14:50251 and the Source is on IP 192.168.2.5, both Source and Sink blocks must specify the Sink IP and port (192.168.2.14:50251).
 
@@ -99,7 +89,7 @@ If the ZMQ Message Source and Sink blocks are on different computers on the same
 node index.js 192.168.2.14 192.168.2.5
 ```
 
-* See [ZMQ PUSH Message Sink](https://wiki.gnuradio.org/index.php/ZMQ_PUSH_Message_Sink) for additional information.
+* See [ZMQ PUB Message Sink](https://wiki.gnuradio.org/index.php/ZMQ_PUB_Message_Sink) for additional information.
 
 ## QA / Testing
 
