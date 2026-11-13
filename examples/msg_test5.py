@@ -9,10 +9,13 @@
 # Author: Barry Duggan
 # Copyright: 2020
 # Description: See https://github.com/duggabe/gr-webserver
-# GNU Radio version: 3.10.6.0
+# GNU Radio version: 3.10.12.0
 
 from gnuradio import blocks
 import pmt
+from gnuradio import blocks, gr
+from gnuradio import zeromq
+import threading
 from gnuradio import gr
 from gnuradio.filter import firdes
 from gnuradio.fft import window
@@ -21,7 +24,6 @@ import signal
 from argparse import ArgumentParser
 from gnuradio.eng_arg import eng_float, intx
 from gnuradio import eng_notation
-from gnuradio import zeromq
 
 
 
@@ -46,7 +48,7 @@ class msg_test5(gr.top_block):
         self.blocks_null_source_0 = blocks.null_source(gr.sizeof_gr_complex*1)
         self.blocks_null_sink_0 = blocks.null_sink(gr.sizeof_gr_complex*1)
         self.blocks_message_strobe_0 = blocks.message_strobe(pmt.intern("GNU Radio"), 5000)
-        self.blocks_message_debug_0 = blocks.message_debug(True)
+        self.blocks_message_debug_0 = blocks.message_debug(True, gr.log_levels.info)
 
 
         ##################################################

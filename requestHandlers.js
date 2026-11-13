@@ -286,6 +286,12 @@ function init (response, request)
                 else
                     break;    // stop on first LF found
                 }
+            // "TRACE: " lines (e.g. radio TX / RX) go to the /trace page, not the console
+            if (msg.startsWith ("TRACE: "))
+                {
+                trace_buffer += (new Date().toTimeString().substr(0,8) + " " + msg.substr(7) + "<br>");
+                return;
+                }
             display_buffer.push ("< " + msg + "<br>");      // put in new item at end
             display_buffer.shift();                                     // remove oldest from top
             });

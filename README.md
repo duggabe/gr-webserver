@@ -100,9 +100,15 @@ cd ~/gr-webserver/examples
 gnuradio-companion
 ```
 
-* Open 'msg_test5.grc' then click 'Execute the flowgraph' or press F6.
+* In the gnuradio-companion screen, open 'msg_test5.grc' then click 'Execute the flowgraph' or press F6.
 
-* On the 'gr-webserver' screen the message "< GNU Radio" will be displayed every 5 seconds. Anything you type in the Input box will be displayed on the 'msg_test5.grc' screen. 
+* On the 'gr-webserver' screen the message "< GNU Radio" will be displayed every 5 seconds. Anything you type in the Input box will be displayed on the 'msg_test5.grc' screen. Click the "X" in the upper right of the 'msg_test5' screen to stop it.
+
+* Also in the examples folder is an echo server which echos each entry. In the gnuradio-companion screen, open 'echo_server.grc' then click 'Execute the flowgraph' or press F6.
+
+* On the 'gr-webserver' screen, anything you type in the Input box will be echoed. Also the message will be displayed on the terminal screen titled "/usr/bin/python3". To terminate the 'echo_server', press Enter on that screen.
 
 * While gr-webserver is running, you can open another tab in your browser to ```http://localhost:50250/trace``` to see some diagnostic information.
+* A message from the flowgraph that starts with ```TRACE: ``` goes to the trace page, with a timestamp, instead of the console screen.
+* The Trace page does not update dynamically. You must do a screen refresh to see the latest entries.
 
