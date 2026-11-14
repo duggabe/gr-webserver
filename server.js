@@ -4,7 +4,6 @@
 "use strict"
 
 var http = require("http");
-var url = require("url");
 var exec = require("child_process").exec;
 var fs = require('fs')
 var _ops = fs.readFileSync ("opSys.txt", "utf8");
@@ -15,7 +14,8 @@ function start (route, handle)
     function onRequest (request, response)
         {
         var postData = "";
-        var pathname = url.parse(request.url).pathname;
+        // the path part of the request, before any "?query" or "#fragment"
+        var pathname = request.url.split (/[?#]/)[0];
 //        console.log ("Request for " + pathname + " received.");
         request.setEncoding("utf8");
         request.addListener("data", function(postDataChunk)
@@ -38,8 +38,9 @@ function start (route, handle)
             });
         }
     var port = 50250;
-    http.createServer(onRequest).listen(port);
-    console.log ("gr-webserver has started. Listening on port: " + port);
+    // localhost only: the console can key a transmitter, so keep it off the LAN
+    http.createServer(onRequest).listen(port, "127.0.0.1");
+    console.log ("gr-webserver has started. Listening on localhost port: " + port);
 //  start browser
     var command;
     if (opSys == "Win64")

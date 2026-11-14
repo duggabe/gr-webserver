@@ -15,6 +15,14 @@ function route(handle, pathname, response, request)
 //        console.log ("Request for " + _fn);
         fs.readFile (_fn, 'utf8', function (err,data)
             {
+            if (err)
+                {
+                console.log ('Page not found: ' + _fn);
+                response.writeHead(404, {'Content-Type': 'text/plain'});
+                response.write ('404 Not Found ' + pathname + "\n");
+                response.end();
+                return;
+                }
             response.writeHead(200, {"Content-Type": "text/html"});
             response.write(data);
             response.end();
